@@ -4,7 +4,7 @@ puts "-------------"
 end
 
 def input_students
-puts "Please enter the names of the students, their birthplace and height"
+puts "Please enter the names of the students, their birthplace and height."
 puts "To finish, just hit return twice"
 students = []
 puts "Name:"
@@ -14,9 +14,15 @@ birthplace = gets.chomp
 puts "Height:"
 height = gets.chomp
 while !name.empty? do
-    students << {name: name, cohort: :november, birthplace: birthplace, height: height}
-    puts "Now we have #{students.count} students"
-    name = gets.chomp
+  students << {name: name, cohort: :november, birthplace: birthplace, height: height}
+  puts "Now we have #{students.count} students"
+  puts "Please add another person or hit return to finish."
+  puts "Name:"
+  name = gets.chomp
+  puts "Birthplace:"
+  birthplace = gets.chomp
+  puts "Height:"
+  height = gets.chomp
 end
 students
 end
