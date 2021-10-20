@@ -35,11 +35,17 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
+  puts "Name:"
   name = STDIN.gets.chomp
-  while !name.empty? do
-    @students << {name: name, cohort: :november}
+  puts "Cohort:"
+  cohort = STDIN.gets.chomp
+  while !name.empty? && !cohort.empty? do
+    students_arr(name, cohort)
     puts "Now we have #{@students.count} students"
+    puts "Name:"
     name = STDIN.gets.chomp
+    puts "Cohort:"
+    cohort = STDIN.gets.chomp
   end
 end
 
@@ -62,16 +68,6 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
-  end
-  puts "Loaded #{@students.count} from #{filename}"
-  file.close
-end
-
 def try_load_students
   filename = ARGV.first
   return if filename.nil?
@@ -84,6 +80,16 @@ def try_load_students
   end
 end
 
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(",")
+    students_arr(name, cohort)
+  end
+  puts "Loaded #{@students.count} from #{filename}"
+  file.close
+end
+
 def save_students
   file = File.open("students.csv", "w")
   @students.each do |student|
@@ -94,5 +100,9 @@ def save_students
   file.close
 end
 
-try_load_students
+def students_arr(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+
+load_students
 interactive_menu
